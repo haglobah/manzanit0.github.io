@@ -1,27 +1,30 @@
 # Site settings
-title: Julia #website title
+title: Javier's Inkwell #website title
 description: > # this means to ignore newlines until "baseurl:"
-  Julia
-url: #https://kuoa.github.io # the base hostname & protocol for your site
+  «There is nothing like looking, if you want to find something.»
+url: https://manzanit0.github.io # the base hostname & protocol for your site
 baseurl: # the sub-path of your site, e.g. /blog/
 
-disqus_shortname: kuoa # leave empty if you don't want comments
+disqus_shortname: manzanit0 # leave empty if you don't want comments
 google_analytics: false #if set to "true" modify the google_analytycs.html, set to false otherwise
 
 # Links settings
 links:
   - name:         Home
     url:          /
-  - name:         About
-    url:          /about
     external:     false
+
+  - name:         Apprenticeship
+    url:          /apprenticeship
+    external:     false
+
   - name:         Archive
     url:          /archive
     external:     false
+
+  - name:         About
+    url:          /about
     external:     false
-  - name:         GitHub
-    url:          http://github.com/kuoa
-    external:     true
 
 # Build settings
 markdown: kramdown
