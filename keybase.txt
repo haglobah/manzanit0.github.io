@@ -1,0 +1,59 @@
+---
+permalink: /.well-known/keybase.txt
+---
+==================================================================
+https://keybase.io/manzanit0
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://manzanit0.github.io
+  * I am manzanit0 (https://keybase.io/manzanit0) on keybase.
+  * I have a public key ASDnQn9ajRDtZa_TXOM8fz_siDnddZxqmWu_Jsd-pRyyggo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0120e7427f5a8d10ed65afd35ce33c7f3fec8839dd759c6a996bbf26c77ea51cb2820a",
+      "host": "keybase.io",
+      "kid": "0120e7427f5a8d10ed65afd35ce33c7f3fec8839dd759c6a996bbf26c77ea51cb2820a",
+      "uid": "8386289db76739c2f116369e4e544519",
+      "username": "manzanit0"
+    },
+    "merkle_root": {
+      "ctime": 1551356821,
+      "hash": "5afdd71db5260b4b8b33b2d8b2e9e2d65f45642916e6aea6480f9f2770493d7ed13fe06012c95f54ad4beaeb040b91cf648acbfd07e86a152d127f2a0f1d87d0",
+      "hash_meta": "f57933b3ef399003b22c30e66db168137d0649def853072738b4a8f659deb41b",
+      "seqno": 4847413
+    },
+    "service": {
+      "entropy": "5Z7arXN2BNoXo1WNvXIE9mdr",
+      "hostname": "manzanit0.github.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "2.10.0"
+  },
+  "ctime": 1551356856,
+  "expire_in": 504576000,
+  "prev": "a39bcac5f7e43bb23ac72943271526a8e92f92cc251102f7dee7db17e970600c",
+  "seqno": 14,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEg50J/Wo0Q7WWv01zjPH8/7Ig53XWcaplrvybHfqUcsoIKp3BheWxvYWTESpcCDsQgo5vKxffkO7I6xylDJxUmqOkvkswlEQL33ufbF+lwYAzEIK1MrvBYJO+sL74Q7Mng10XtD47xB4xozRwGc9xLz+zsAgHCo3NpZ8RA/PwnNmOCjqETodpSLh1FeaDKmuZph8uXaugQvo6OnW46tq5gQA4h8yep0lZc/pkO9ZDsA4O/45pUtvZc1zvkA6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIJQe/PIC10ksLriWGiHw/QlWgu+s1KzkYQrOf+kZn+NKo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/manzanit0
+
+==================================================================
