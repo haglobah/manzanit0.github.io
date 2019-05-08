@@ -9,13 +9,14 @@ permalink: /about/
 * Email: jgmanzano[at]outlook[dot]com
 * [Github](http://github.com/Manzanit0)
 
-#### Tecnologies
-* **Salesforce** - Lightning, SalesforceDX, pretty much anything.
-* Javascript - **Nodejs**, AngularJS
-* **.NET/C#** - MVC 5, WebAPI, EntityFramework 6
-* MSSQL, MongoDB
-* Linux, Bash, **Git**
-* The challenge of learning the next one!
+#### I like working with...
+* .NET/C#
+* Elixir
+
+#### I've worked with...
+* Salesforce - Lightning, SalesforceDX... pretty much anything.
+* Javascript - vanilla and React mostly
+* Java - Spring MVC, Spring WebFlux, Reactor
 
 #### Favourite books
 * [The Screwtape Letters](https://www.goodreads.com/book/show/17383917-the-screwtape-letters) by C. S. Lewis
