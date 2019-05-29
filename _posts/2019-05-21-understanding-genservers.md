@@ -89,7 +89,7 @@ And on `iex>`:
 iex> marta = Person.create()
 #PID<0.134.0>
 iex> Person.say(marta, "Hey peep!")
-Said 'Hey peep!' to #PID<0.167.0>
+Said 'Hey peep!' to #PID<0.134.0>
 {:msg, "Hey peep!"}"
 ```
 
