@@ -14,12 +14,12 @@ it right today.
 Streams are, in essence, a sequence of data elements which are available over time. Just like an actual stream
 of water, the data flows/becomes available, instead of having it all from the beginning. There are many benefits
 to this although the two most important are a huge enhancement to performance and the fact that data is not
-always available inmediately.
+always available immediately.
 
-Like just pointed, one of the main reasons to use streams is because sometimes, **data is not inmediately
+Like just pointed, one of the main reasons to use streams is because sometimes, **data is not immediately
 available**. For example, if you're listening to a weather streaming API, the current temperature is
 calculated in the current moment, so (1) the data is infinite as long as you continue listening to the service,
-and (2) new data is available each minute, as it's produced. This can't be modeled with a finite amount of data,
+and (2) new data is available each minute, as it's produced. This can't be modelled with a finite amount of data,
 so that's when we decide to model it with an infinite stream of data.
 
 Since the size of a stream is undefined, they are potentially unlimited, it's important to remember that we can't
@@ -248,7 +248,7 @@ possible, but for understanding how, we must introduce one last concept: **seeki
 If you've tried reading a stream a second time, you might have found yourself not being able to read previous data, but
 just reading new data. Some streams don't support seeking, but assuming they do, the reason behind this is that streams have
 a cursor which points to the last byte read. Every time we read a new byte, that cursor is advanced to the new position.
-In order to read already processed bytes we would need to rewind that cursor all the way to the beggining. This is called
+In order to read already processed bytes we would need to rewind that cursor all the way to the begining. This is called
 seeking.
 
 In Java, the way to do this is using the `mark(int)` and `reset()` method of the
@@ -257,7 +257,7 @@ we would simply set [`file.InputStream.Position = 0`](https://stackoverflow.com/
 These are the side effects of reading a stream. If a stream doesn't support seeking, another solution would be copying
 our read bytes to another array and maintain a copy. Nonetheless, take into account that sometimes one of the purposes of
 using streams is to go easy on memory consumption, and we're copying all the read data in a memory array, then we're
-anulling this completely.
+annulling this completely.
 
 ## Wrapping up
 
