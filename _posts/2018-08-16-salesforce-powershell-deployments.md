@@ -4,7 +4,6 @@ title: "Salesforce deployments with PowerShell"
 author: Javier Garcia
 description: "A script to deploy and test salesforce metadata/apex e2e."
 category: salesforce
-apprenticeship: false
 tags: salesforce, powershell, automation, deployment
 ---
 

@@ -4,7 +4,6 @@ title: "Interacting with Salesforce's Tooling API"
 author: Javier Garcia
 description: "An application to refresh Salesforce sandboxes."
 category: salesforce
-apprenticeship: false
 tags: salesforce, .NET, automation
 ---
 

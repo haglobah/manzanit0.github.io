@@ -4,7 +4,6 @@ title: "On git commits"
 author: Javier García
 description: "What happens when you write clean git commits"
 category: git
-apprenticeship: false
 tags: git, clean
 ---
 

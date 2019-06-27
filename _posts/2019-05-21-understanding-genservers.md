@@ -4,7 +4,6 @@ title: "Understanding Genservers"
 author: Javier García
 description: "Genservers under the hood"
 category: elixir
-apprenticeship: false
 tags: elixir, otp, genserver, in-depth
 ---
 

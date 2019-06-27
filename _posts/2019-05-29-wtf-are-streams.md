@@ -4,7 +4,6 @@ title: "WTF are streams?"
 author: Javier García
 description: "Streams as a concept explained, with examples in multiple languages"
 category: computing
-apprenticeship: false
 tags: computing, streams, elixir, java, c#
 ---
 

@@ -4,7 +4,6 @@ title: "Getting started with Golang"
 author: Javier García
 description: "My personal journey with Go"
 category: golang
-apprenticeship: false
 tags: golang, vim
 ---
 

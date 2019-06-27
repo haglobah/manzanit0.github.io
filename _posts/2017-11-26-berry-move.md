@@ -4,7 +4,6 @@ title: "A first attempt to fight Salesforce deployments"
 author: Javier Garcia
 description: "A quick sketch of an application I want to develop to ease Salesforce deployments."
 category: salesforce
-apprenticeship: false
 tags: salesforce, nodejs, automation, deployment
 ---
 

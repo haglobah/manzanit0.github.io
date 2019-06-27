@@ -1,20 +1,22 @@
 ---
 layout: page
-title: Apprenticeship
-subtitle: Lessons learnt while learning.
-permalink: /apprenticeship/
+title: Today I Learnt
+subtitle: Small drops of knowledge learnt in everyday's chores
+permalink: /today-i-learnt/
 ---
 
 <div class="home">
   <ul class="post-list">
     {% for post in site.posts %}
-      {% if post.path contains 'apprenticeship' %}
+      {% if post.path contains 'til' %}
         <li>
           <div>
             <a class="post-link" href="{{ site.url }}{{ post.url}}">
               {{ post.title }}
             </a>
-            <span class="post-date">{{ post.date | date_to_long_string }}</span>
+            <span class="post-date">
+              {{ post.date | date_to_long_string }}
+            </span>
           </div>
         </li>
       {% endif %}

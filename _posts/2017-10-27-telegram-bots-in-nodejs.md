@@ -4,7 +4,6 @@ title: "Telegram bots in NodeJS"
 author: Javier Garcia
 description: "Touching base with Telegram's bot framework."
 category: bots
-apprenticeship: false
 tags: bots, telegram, nodejs, automation
 ---
 
