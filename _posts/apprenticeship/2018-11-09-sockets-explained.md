@@ -5,6 +5,7 @@ author: Javier Garcia
 description: "A quick and dirty overview of sockets."
 category: networks
 apprenticeship: true
+leak: true
 tags: networks, osi, server, sockets
 ---
 

@@ -14,10 +14,6 @@ links:
     url:          /
     external:     false
 
-  - name:         Apprenticeship
-    url:          /apprenticeship
-    external:     false
-
   - name:         TIL
     url:          /today-i-learnt
     external:     false
