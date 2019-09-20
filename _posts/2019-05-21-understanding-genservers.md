@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Understanding Genservers"
+title: "Elixir: Understanding Genservers"
 author: Javier García
 description: "Genservers under the hood"
 category: elixir
