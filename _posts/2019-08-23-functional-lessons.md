@@ -9,7 +9,7 @@ tags: functional, elixir, clojure
 
 I still remember the time I spiked my first application in a functional language—it was Autumn 2018,
 I had come to 8th Light to start my journey as a crafter, and I didn't even know what really made a
-functional language functional. Today, nearly one year afterwards, I'm pretty confident it's my favourite
+functional language functional. Today, nearly one year later, I'm pretty confident it's my favourite
 paradigm. In this blog post my intention is to share this little part of my journey, and the different
 things I learnt during it. Hopefully it may be of use to people which choose to start a journey like mine.
 
@@ -21,17 +21,20 @@ My mentor at that time gave me freedom to pick the project, and I thought it wou
 something that I could afterwards put to good use, in this case for my commute. The
 language, though, he picked.
 
-Dear reader, I'm not sure if you've every tried any Lisp dialect, but if you, like me, come from an
-Object Oriented world, the learning curve can get reeeal steep. I remember trying to figure out how to loop over
-lists to change the elements, trying to filter maps... It's very different than what we're mostly used to.
-The first things I got acquainted with that really paid off were the classic `filter/2`, `map/2`, and
-`reduce/3`. Afterwards, recursion, immutability... We'll go through some of these in more detail in
-a minute.
+Dear reader, I'm not sure if you've every tried any LISP dialect, but if you, like me, come from an
+Object Oriented world, the learning curve can get very steep. I remember trying to figure out how to loop over
+lists to change the elements, trying to filter dictionaries... It's very different than what we're mostly used to.
+The first things I got acquainted with that really paid off were the classic `filter`, `map`, and `reduce`,
+then came recursion to achieve loops, and many others. It was actually by learning these tools and giving
+them enough time to sink in that I started to understand the real difference between imperative and declarative code,
+and how the functional paradigm usually tends to favour more that declarative style. I could just say that learning a
+functional language and its idioms truly changed my perspective of how to solve problems and, ultimately, of how to
+express those solutions.
 
 To summarize my first impressions, both the amount of parentheses that Clojure brought to the table (or any
-lisp dialect for that sake), and the amount of new concepts I had to learn, made it very
-complicated. It took me nearly a month until I started to enjoy the language a little bit more. The good
-thing is that at the end, it does pay off.
+LISP dialect for that sake), and the amount of new concepts I had to learn, made it very overwhelming. It took me
+nearly a month until I started to enjoy the language a little bit more. The good thing is that at the end,
+it does pay off.
 
 ## Keeping functions pure is crucial
 
@@ -50,65 +53,124 @@ carPark.unpark(porsche);
 carPark.close();
 ```
 
-The *problem* with the above is that all state is saved within our `CarPark` instance, and as we park or
+The _problem_ with the above is that all state is saved within our `CarPark` instance, and as we park or
 unpark cars, that instance is modified. That's called a side-effect. A side-effect is any operation that
-happens within a function that is collateral. Imagine a `sum/2` function that, apart from summing two
+happens within a function that is collateral. Imagine a `sum` function that, apart from summing two
 numbers and returning the result, also saved it to a database. The saving to the database is a side-effect.
 
 I'm aware that I still haven't explained the concept of purity, but I wanted to talk about side-effects
-first because it greatly helps understand purity. In a nutshell, a function is pure when it has no
-side-effects. Easy, right? Making functions pure isn't that easy if you're not used to it, though. Printing
-a value to the log, changing a global variable, or simply changing some mutable state within the application
-makes our function impure.
+first because it greatly helps understand purity. In a nutshell, *a function is pure when for a same input,
+it has the same output always and it never has any side-effects*. Printing a value to the log or simply changing
+some mutable state within the application makes our function impure.
 
-You might be wondering: *why is purity such a big deal though?*. That's the lesson I learnt the hard way.
-By the the time I realised, I had a whole layer that was scheduling cron jobs, saving records to a database,
-and interacting with the web—a bunch of bugs, and no easy way to create tests to fix them.
+You might be wondering: *why is purity such a big deal though?*. Purity makes our functions little sandboxes.
+It is by making pure functions that we can feel safe that when they change something it will only affect the
+context within the actual function. And this brings us to immutability. As we make our functions pure, that means
+that they only work with the parameters we provided them with AND they don't mutate them, but return a result
+based on a copy of those parameters.
 
-As we keep our code (especially our domain logic) pure, it is easier to test and overall more predictable.
-Purity keeps the code simple, while impurity increases the complexity. Let's check out an example to
-illustrate it.
+Now, that may sound confusing, but lets say that we rewrote the above code to look something like this:
 
-Say for example that you want to calculate the sum of two numbers and log the operation made in a database.
-If go for the fastest possible solution, also impure, it would look somewhat like this:
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class CarPark {
+    private String status;
+    private List<String> cars;
+
+    public CarPark() {
+        status = "Closed";
+        cars = new ArrayList<>();
+    }
+
+    public CarPark(String status, List<String> cars) {
+        this.status = status;
+        this.cars = cars;
+    }
+
+    public CarPark open() {
+        return new CarPark("Open", this.cars);
+    }
+
+    public CarPark close() {
+        return new CarPark("Closed", this.cars);
+    }
+
+    public CarPark park(String car) {
+        List<String> newList = new ArrayList<>(List.copyOf(this.cars));
+        newList.add(car);
+        return new CarPark(this.status, newList);
+    }
+
+    public CarPark unpark(String car) {
+        List<String> newList = new ArrayList<>(List.copyOf(this.cars));
+        newList.remove(car);
+        return new CarPark(this.status, newList);
+    }
+}
+```
+
+Which when used would look like:
+
+```java
+CarPark park = new CarPark();
+CarPark openPark = park.open();
+CarPark parkWithPorsche = openPark.park("Porsche");
+CarPark parkWithoutPorsche = openPark.unpark("Porsche");
+CarPark finalPark = parkWithoutPorsche.close();
+```
+
+Now, of course that is not idiomatic Java, but if we look at it closely–every time a function is executed, it
+provides us with a brand new instance with the attributes we expect. The major advantage of that is that if,
+say for example, another process where to run one of those methods concurrently, it would not screw up the operations
+running in other concurrent threads–each thread would be working with their own instances. Those functions are pure.
+
+To wrap up all that I've just mentioned above, **pure functions are functions which don't create side-effects and only
+affect the context within the function itself, not outside**. As we keep our code pure, it is easier to test and overall
+more predictable. Purity keeps the code simple, while impurity increases the complexity.
+
+Now, coming back to functional languages, Elixir specifically solves a lot of those problems out of the box!
+By default, all data structures are immutable in Elixir, which means that whenever they are altered, the runtime
+will give back a complete brand new copy of the structure. This means that if we were to implement a `CarPark` module,
+it would be:
 
 ```elixir
-defmodule Maths do
-  @repository Application.get_env(:my_app, :repository)
+CarPark.new() # Creates a new struct
+|> CarPark.open() # Creates a new struct with status = open
+|> CarPark.park("porsche") # Creates a new struct with a porsche parked
+|> CarPark.unpark("porsche") # ...
+|> CarPark.close() # ...
+```
 
-    def sum(a, b) do
-        result = a + b
-        @repository.insert(sum)
-        result 
-    end
+The code for that would be:
+
+```elixir
+defmodule CarPark do
+  defstruct[:status, :cars]
+
+  def new(), do: %CarPark{status: :closed, cars: []}
+
+  def open(%CarPark{} = park), do: %CarPark{park | status: :open}
+
+  def closed(%CarPark{} = park), do: %CarPark{park | status: :closed}
+
+  def park(%CarPark{cars: cars} = park, car_to_add) do
+    %CarPark{park | cars: [car_to_add | cars]}
+  end
+
+  def unpark(%CarPark{cars: cars} = park, car_to_remove) do
+    less_cars = Enum.filter(cars, fn car -> car == car_to_remove end)
+    %CarPark{park | cars: less_cars}
+  end
 end
 ```
 
-The problem is that to test that solution, I have to mock the repository; and whenever I use `Maths`
-somewhere else, I would have to do the whole wiring again. On the other hand, if I separate it in two
-layers (the domain logic and the consumer, which will always be impure), I don't have to worry about
-complicated testing in my domain.
-
-```elixir
-defmodule Maths do
-    def sum(a, b), do: a + b
-end
-
-defmodule MathsService do
-    @repository Application.get_env(:my_app, :repository)
-
-    def sum(a, b) do
-        result = Maths.sum(a, b)
-        @repository.insert(sum)
-        result 
-    end
-end
-```
-
-Initially it might seem complicated to understand the benefit of doing the above, since it seems that we're just wrapping our code in more functions that aren't adding any extra functionality, but having all the domain logic
-pure means we can test it without having to worry about persistance, HTTP, logging, or any other complex issues.
-Eventually we will mock certain modules and test the DB layer, and the HTTP wiring... but without having
-to worry if the core of the app, the business logic, is wrong.
+Now, like I just mentioned, most functional languages, like Elixir, come with immutability out of the box, and
+that is already a fantastic asset to help us keep purity throughout our codebase. Nonetheless that module would
+stop being pure the moment I dump in something along the lines of `Database.save(carpark)` in the functions.
+And if we did that, things like testing would go from being trivial to being complicated and requiring a lot
+of mental effort to keep track of the state of things.
 
 ## Make functions read only horizontal or vertical
 
@@ -150,7 +212,17 @@ but try to avoid mixing them as much as possible. There are many ways of achievi
 trying to keep the function heads consistent in the order of parameters. For example, accepting
 always the struct to work with as the first parameter allows us to pipe functions much easier. Take
 a look at the `upload/2` function above. By changing the order of the parameters we can either pipe it
-or not.
+or not. A good example of this is the [`Enum`](https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex)
+module in Elixir. Just notice that for the Enum module to be pipeable it always accepts the enum as the first parameter
+and always returns a list!
+
+```elixir
+[1, 2, 3, 4]
+|> Enum.reverse()
+|> Enum.map(fn x -> x*x end)
+|> Enum.filter(fn -> x > 5 end)
+|> Enum.reduce(fn x, acc -> x + acc end) # returns 25
+```
 
 For me, realizing this was huge. I remember the first modules I developed with Elixir I didn't care much
 about the order of the parameters. After all, it's not something you worry about that much in C# or Java,
@@ -160,55 +232,73 @@ about it, my thought process changed, and with it the readability of my code.
 ## Reducers, gotta love 'em
 
 Following up on the order of parameters, come reducers. At the end of the day *a reducer is simply a function
-that accepts some data, applies a function to it, and returns the modified version of the data*.
-Say for example the `Enum.reduce/3` function:
+that accepts some data, applies some transformations to it, and returns the modified version of the data*. You'll
+probably be thinking that it's what all functions do, but the highlight here is that reducers don't return the
+specific piece of data transformed, but the whole data WITH the transformed bits.
+
+Say for example the `String.capitalize/1` function:
 
 ```elixir
-Enum.reduce([1, 2, 3], 0, fn x, acc -> x + acc end)
+iex> String.capitalize("abcd")
+"Abcd"
 ```
 
-It's taking a list of data, iterating over it, summing each number, and returning the final result.
-On the other hand, a different reducer that uses structs but achieves a similar purpose could look like:
+It takes a string, capitalizes it and returns the new string. When the function is applied, it gives us a new
+string with the `A` capitalized, not just the capital `A`. A different reducer that uses structs but achieves a
+similar purpose could look like:
 
 ```elixir
-def accumulate(%Computation{result: r, to_process: n}) do
-    result = Enum.reduce(n, r, fn x, acc -> x + acc end)
-    %Computation{result: result, to_process:[]}
+def capitalize(%SomeStruct{value: value} = s) do
+  %SomeStruct{s | value: String.capitalize(s)}
 end
 ```
 
-The main difference is that the latter gets the data from the struct. The cool thing about it is that it allows
-us to do things like:
+Instead of returning simply the new `value`, we return the complete structure, like for example `IO.inspect/1`.
+Some different reducers operating on the same structure could be:
 
 ```elixir
-iex> %Computation{result: 0, to_process: [1, 2, 3]}
-     |> accumulate()
-     |> Map.put(:to_process, [4, 5, 6])
-     |> accumulate()
+def hash(%SomeStruct{value: value} = s) do
+  hashed = :crypto.hash(:sha, value) |> Base.encode16
+  %SomeStruct{s | value: hashed}
+end
 
-21
+def downcase(%SomeStruct{value: value} = s) do
+  %SomeStruct{s | value: String.downcase(s)}
+end
+```
+
+Now, if we combine all these together, the value really sticks out. They allow us to do things like:
+
+```elixir
+iex> %SomeStruct{value: "javier"}
+     |> capitalize()
+     |> hash()
+     |> downcase()
+
+%SomeStruct{value: "7f3d0970ec0e336aa08a9e14d4d88e79131e0065"}
 ```
 
 That, my friends, is the magic of reducers. By applying transformations to our data structures and always
 making sure we return that same data structure, we can endlessly pipe our reducers, thus achieving the vertical
 functions we spoke about earlier.
 
-Having the core business logic of our application modeled with reducers, as long as it makes sense, also
-makes it very easy to test it:
+Having the core business logic of our application modelled with reducers, as long as it makes sense, also
+makes it very easy to test:
 
 ```elixir
-def assert_result(%Computation{result: r} = c, expected) do
-    assert r == expected
-    c
+def assert_result(%SomeStruct{value: v} = s, expected) do
+    assert v == expected
+    s
 end
 
-test "computation works!" do
-    %Computation{result: 0, to_process: [1, 2, 3]}
-    |> accumulate()
-    |> assert_result(6)
-    |> Map.put(:to_process, [4, 5, 6])
-    |> accumulate()
-    |> assert_result(21)
+test "complex hashing works!" do
+    %SomeStruct{value: "javier"}
+    |> capitalize()
+    |> assert_result("Javier")
+    |> hash()
+    |> assert_result("7F3D0970EC0E336AA08A9E14D4D88E79131E0065")
+    |> downcase()
+    |> assert_result("7f3d0970ec0e336aa08a9e14d4d88e79131e0065")
 end
 ```
 
@@ -226,9 +316,9 @@ affect the consumers of your API.
 
 In FP sometimes it can be slightly more challenging, or maybe just different, especially when the language
 doesn't expose the concept of complex typing. I found out that by encapsulating data with functions, I was
-able to make my applications much more robust—give them a consistent API. In Elixir we have structs, which
-solves that problem for us; but in Clojure, we don't. So instead of passing an anonymous map around and
-accessing its keys, we could do something like:
+able to make my applications much more robust—consumers would have a consistent API with which to interact.
+In Elixir we have structs, which solves that problem for us; but in Clojure, we don't. So instead of passing
+an anonymous map around and accessing its keys, we could do something like:
 
 ```clojure
 (defn new-job [userid cronexpression service]
@@ -258,37 +348,12 @@ By encapsulating our data sometimes with structs (but when not possible, with fu
 our consumers how we want them to use our API—we're telling them **"Don't use that property because
 tomorrow it might not be there!"**.
 
-## Rethinking state
-
-The last thing I want to talk about is state. Mutable shared state.
-
-Again, since I came from an OO world, I was used to creating instances and modifying their properties, and
-doing endless things with them. But in some languages... that's just not possible. Elixir's data structures
-are immutable—if you change a map, it will generate you a new map with the modified bit, and the old one will
-remain the same.
-
-So the question arises—How can I store state in my application? Say I'm spiking a solution and I don't want
-to wire a database, but simply manage some data in-memory. Or say that my application actually requires some
-in-memory state! How can you do that? The answer I have found is that each language solves the problem in their
-own personal way. Elixir brings the concept of
-[light-weight processes](https://elixir-lang.org/getting-started/mix-otp/agent.html)
-to the table, whereas Clojure uses [atoms](https://clojure.org/reference/atoms) and [refs](https://clojure.org/reference/refs).
-At the end of the day, depending on which language you're using, you'll have to find out which is
-the idiomatic way.
-
-Nonetheless, regardless of how each language solves the problem of managing mutable shared state, I have found
-in my experience that the less, the better, and as we move all our state towards a database and drive it away
-from the application, the problems we have to solve down the road become simpler, and less tangled. Managing
-mutable shared state is difficult, so it's always a good bet to keep it isolated in the database.
-
 ## Wrapping up
 
-Coming to an end, all I can say is... stay curious, keep learning, question yourself. All of this is just a quick
-summary of the different things I have learnt after having screwed up on many occasions. Londibot
-started as a Clojure bot, but as technical debt piled up due to the poor decisions I made, I started from
-scratch in Elixir and became a happier man. But it wasn't because I changed stack (maybe a little), but because
-I was able to improve all the design mistakes I had made before.
-
-Stay curious,
-
-Javier
+Coming to an end, all I can say is... stay curious, keep learning, question yourself. Functional purity,
+encapsulation, readability are all things solutions to problems that emerged as code just didn't click.
+All of this is just a quick summary of the different things I have learnt after having screwed up on many
+occasions. [Londibot](https://github.com/Manzanit0/londibot) started as a Clojure bot when I was just
+starting to learnt functional programming, and it was thanks to poor design choices and bad decisions that
+I kept reading and searching for better solutions to the problems that arose in my codebase. That's how all
+this came up.
