@@ -17,10 +17,10 @@ _Disclaimer: This has been run in Ubuntu 18.04._
 To start the postgres server:
 
 ```
-sudo /etc/init.d/postgresql stop
+sudo /etc/init.d/postgresql start
 ```
 
-To the server:
+To stop the server:
 
 ```
 sudo /etc/init.d/postgresql stop
@@ -33,7 +33,7 @@ To download and run docker as a Docker container:
 ```
 docker pull postgres
 mkdir -p $HOME/docker/volumes/postgres
-docker run --rm   --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres
+docker run --rm   --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
 ```
 
 To stop it, simply kill the container. Some useful commands:
