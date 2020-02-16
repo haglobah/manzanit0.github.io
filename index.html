@@ -12,7 +12,7 @@ layout: main
       {% for post in site.posts %}
         <!-- Regular posts are directly nested under _posts,
              hence the 2 (all posts written in year 2xxx.-->
-        {% if post.path contains '_posts/2' or post.leak  %}
+        {% if post.path contains '_posts/2' or post.path contains '_drafts/2' or post.leak  %}
           <li>
             <div>
               <a class="post-link" href="{{ site.url }}{{ post.url}}">
