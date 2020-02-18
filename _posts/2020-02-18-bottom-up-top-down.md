@@ -67,7 +67,7 @@ but today I was able to come back to the original reason why I loved tests in th
 the first real consumer of my code, and they help me reason about my actions in a simpler way.
 
 Now, for those interested in the top-down, bottom-up topic, Djistra wrote a full monologue on it [here][0]. Feel
-free to give it a read, it's every word.
+free to give it a read, it's worth every word.
 
 ~ Javier G.
 
