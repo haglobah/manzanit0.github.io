@@ -45,6 +45,22 @@ it's complicated to scale. It inhibits scale AND it's not 100% foolproof.
 One exaple is Java Transaction API. It's better to not handroll this stuff. The
 algorithms are complex.
 
+Futher comments from FLP:
+
+> Whatever decision is made, all data managers must make the same decision in
+> order to preserve the consistency of the database (...)
+
+> The asynchronous commit protocols in current use all seem to have a “window
+> of vulnerability”- an interval of time during the execution of the algorithm
+> in which the delay or inaccessibility of a single process can cause the
+> entire algorithm to wait indefinitely.
+
+> (..) no completely asynchronous consensus protocol can tolerate even a single
+> unannounced process death (...) it is impossible for one process to tell
+> whether another has died (stopped entirely) or is just running very slowly.
+
+Link [Impossibility of Distributed Consensus with One Faulty Process][3]
+
 ## Other notes on consistency
 
 Usually, if we're talking about transactions in distributed systems, eventual
@@ -59,13 +75,17 @@ transactions add an extra BIG layer of complexity that not all teams are
 prepared to handle. Then, again, using crutches till we get there could be
 interesting. Like everyone talking to the same DB.
 
+
 ## interesting reads
 
 [Eventual Consistency Today: Limitations, Extensions, and Beyond][1]
 [Reviews on the above paper][2]
+[Consensus on Transaction Commit][4]
 
 
 
 [0]: https://www.goodreads.com/book/show/22512931-building-microservices
 [1]: https://queue.acm.org/detail.cfm?id=2462076
 [2]: https://web.eecs.umich.edu/~mozafari/fall2018/eecs584/reviews/summaries/summary29.html
+[3]: https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf
+[4]: https://arxiv.org/pdf/cs/0408036.pdf
