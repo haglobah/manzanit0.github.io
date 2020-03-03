@@ -14,7 +14,7 @@ principles that apply to all kinds of software paradigms.
 
 ## Single Responsability Principle
 
-The first solid principle is the **Single Responsability Principle**. It states
+The first solid principle is the Single Responsability Principle. It states
 that any given class should have one, and only one, reason to change. If we
 were to take this to a functional ground, we could translate it to _any given
 function should have one, and only one, reason to change_, which I think is
@@ -35,9 +35,9 @@ deal with many kinds of interactions with the outside world. We're talking
 HTTP, we're talking databases, logging, any kind of IO... you name it. It is
 then unavoidable to have functions that deal with these, hence being impure.
 But the same happens in object-oriented programming. At some point you have to
-persist the blog post, once you've written it. The important take here is to
+persist the blog post, once you've written it. **The important take here is to
 know when and how to isolate that impurity in order to keep the [domain][1] of
-the application pure, following the single responsability principle.
+the application pure**, following the single responsability principle.
 
 ## Open/Closed Principle
 
@@ -46,20 +46,20 @@ just depends on the right perspective. I'll talk about two things here: [higher
 order functions][3] and [algebraic data types][4].
 
 One of the most used mechanics in functional languages are the use of
-higher-order functions. A HOF is simply **a function that either takes a
-function as an argument or returns a function as its result**. This is possibly
-the second most simple way of composing behaviour, of course after simply
-invoking the function directly by it's reference.  It enables us to dinamically
-inject functions into other functions and modify the behaviour in runtime. In
-some way, it's composition the functional way. Now, if we've already designed
-our functions with the first principle in mind, we can create new functions
-composing the already existing ones in the most creative ways, ocasionally
+higher-order functions. A HOF is simply a function that either takes a function
+as an argument or returns a function as its result. This is possibly the second
+most simple way of composing behaviour, of course after simply invoking the
+function directly by it's reference.  It enables us to dinamically inject
+functions into other functions and modify the behaviour in runtime. In some
+way, it's composition the functional way. Now, if we've already designed our
+functions with the first principle in mind, **we can create new functions
+composing the already existing ones in the most creative ways**, ocasionally
 passing them as parameters too. Functions closed to modification, yet open to
 extension.
 
 The second topic that I find relevant is that of algebraic data types. At the
 end of the day, an algebraic data type is a kind type made from combining
-multiple types. A simple example is a tuple, since it can containe different
+multiple types. A simple example is a tuple, since it can contain different
 sets of types within. Another one are union types, like you can find in
 Haskell, F# or Elm.  If we start thinking of types in this way, we can then
 start combining the existing types to obtain composites, hence obtaining this
@@ -80,8 +80,8 @@ subtype of `A`, it will still return me `B`, simply because `T` contains
 everything that `A` does, plus a little more. Now, while it's true that not all
 functional languages are typed, like Elixir or Clojure, others are, like
 Haskell or F#. And it applies just the same. I like to see LSP as a rewording
-of [contravariance in category theory][5]. It's not about the paradigm, but
-about types.
+of [contravariance in category theory][5]. **It's not about the paradigm, but
+about types**.
 
 ## Interface Segregation Principle
 
