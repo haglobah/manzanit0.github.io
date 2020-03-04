@@ -76,6 +76,23 @@ prepared to handle. Then, again, using crutches till we get there could be
 interesting. Like everyone talking to the same DB.
 
 
+## Deployment
+
+What is the real benefit of a monorepo which contains all the services vs having each
+service in it's own repo? CI becomes more complex, because you either have to deploy all
+at the same time, or you have to map different pipelines to different parts of the source
+tree.
+
+On the other hand, I can see how a monorepo would make a set of teams that are not mature
+enough to be conscious of the different services that exist. Also, in a green field project
+it's useful as the teams discover the boundaries of the services - changes are less expensive.
+
+Sam Newman explains how he thinks that the best approach is to go with different repositories
+and each repository have it's own test suite, CI pipeline, etc. This truly makes services
+more independant.
+
+Question: Benefits of monorepos other than that? Google used monorepo, right?
+
 ## interesting reads
 
 [Eventual Consistency Today: Limitations, Extensions, and Beyond][1]
