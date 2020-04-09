@@ -93,6 +93,20 @@ more independant.
 
 Question: Benefits of monorepos other than that? Google used monorepo, right?
 
+## Logging
+
+Reading some [documentation from MSFT][5] some questions come to mind:
+
+1. How is correlated logging handled? Do platforms like New Relic manage it out of the box
+   or is it something k8s does? Does the developer do it?
+2. Also, how is testing across services handled? Are other services stubbed, if so, how?
+3. When a service fails, how far will the error bubble up? Also, how do you trace the error
+back to it's original service if... the observability isn't there?
+
+I can see how these cross-cutting concerns could be lifted to the API gateway, instead
+of being handled directly by the actual services. Same as auth, etc.
+
+
 ## interesting reads
 
 [Eventual Consistency Today: Limitations, Extensions, and Beyond][1]
@@ -106,3 +120,4 @@ Question: Benefits of monorepos other than that? Google used monorepo, right?
 [2]: https://web.eecs.umich.edu/~mozafari/fall2018/eecs584/reviews/summaries/summary29.html
 [3]: https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf
 [4]: https://arxiv.org/pdf/cs/0408036.pdf
+[5]: https://docs.microsoft.com/en-us/azure/architecture/guide/architecture-styles/microservices
