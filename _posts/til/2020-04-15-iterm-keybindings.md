@@ -20,7 +20,7 @@ Notice the `\n` at the end, so it runs, instead of simply _sending_ the text.
 
 Here's a quick screenshot:
 
-![screenshot](/assets/iterm-keybinding.png)
+![screenshot](/assets/iterm-keybindings/iterm-keybinding.png)
 
 Now, while I can see how this is not very portable, for example to my Ubuntu machine,
 It's so simple to set up, the ROI is nearly instantaneous :-)
