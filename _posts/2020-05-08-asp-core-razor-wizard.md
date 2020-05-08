@@ -8,7 +8,7 @@ tags: dotnet, asp, server-rendering, forms
 
 As you can see based on my most recent posts, I've been focusing on some
 ASP.NET Core development.  Recently, one of the things I've been working on is
-a snappy form with a wizard-like interface, which would allow the users of an
+a snappy form with a wizard-like interface which would allow the users of an
 application to input the information without being overwhelmed with the amount
 data required.
 
@@ -38,12 +38,13 @@ approach is that I don't necessarily have to go with creating a backend API and
 a frontend interface which consumes the API.  Sometimes, you just don't need
 all the RESTful endpoints, nor the JSON serialising and de-serialising, dealing
 with CORS, or many of the other inconvenients of the architecture. You just
-need some SIMPLE.
+need something SIMPLE.
 
 In the particular case of the application I'm working on, I have discovered
-that simply exposing a set of sites is more than enough. And then, maybe, if
+that simply exposing a set of pages is more than enough. And then, maybe, if
 tomorrow I do end up needing an API... I can always start working on it and
-adapt my architecture as needed. It's all about evolving architecture.
+adapt my architecture as needed. Not yet though.It's all about evolving
+architecture.
 
 ## Designing the solution
 
@@ -55,7 +56,8 @@ a simple page and some event handlers for it.
 As an extra bonus, while playing around with Razor Pages, I discovered them to
 be not just incredibly simple and easy to use but also extremely fast (although
 it does make sense... simple is usually fast!).  This is a quick snapshot of
-how fast going back and forward through the wizard was: ~120ms in average.
+how fast going back and forward through the original wizard was: ~120ms in
+average, with form steps of over 10 fields and the full wizard being 6 steps.
 
 ![screenshot of razor pages rendering times](http://i.imgur.com/NFFMbx3.png)
 
@@ -136,7 +138,7 @@ I could start by defining an abstract class and a couple of different steps
 that would inherit from it as viewmodels. I usually prefer scratching in C#
 instead of HTML to get an idea of how the UI is going to look, and viewmodels
 are perfect for that—once you have them figured out, you only have to map their
-properties.
+properties to the relevant template.
 
 ```cs
 public abstract class StepViewModel
@@ -175,10 +177,11 @@ public class ContactInformationStep : StepViewModel
 
 ### The Razor Page
 
-The latter model the view of the different steps of the wizard. However, we
-still haven't tallked about the actual page that is going to contain the
-different steps and the handlers, to decide which to render when, and what to
-do with the data? Let's start with a Page that orchestrates our viewmodels.
+The latter classes model the view of the different steps of the wizard.
+However, we still haven't talked about the actual page that is going to contain
+the different steps and the handlers, in order to decide which step to render
+when, and what to do with the data. Let's start with a Page that orchestrates
+our viewmodels.
 
 ```cs
 public class Index : PageModel
