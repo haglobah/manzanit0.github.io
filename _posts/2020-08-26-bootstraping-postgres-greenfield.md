@@ -2,7 +2,7 @@
 layout: post
 title: Bootstraping Postgres in your project
 author: Javier Garcia
-category: bots
+category: automation
 tags: postgres, docker, automation
 ---
 
