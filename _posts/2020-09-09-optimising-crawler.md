@@ -7,7 +7,7 @@ tags: Elixir, concurrency
 ---
 
 This is a really quick summary of how I optimised my personal web crawler. You
-can check it out: https://github.com/Manzanit0/spidey
+can check it out [HERE](https://github.com/Manzanit0/spidey)
 
 ## Preconditions, assumptions... things to know before starting to read
 
