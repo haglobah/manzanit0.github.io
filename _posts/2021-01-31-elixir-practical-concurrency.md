@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Elixir: Practical Concurrency
+title: "Elixir: Practical Concurrency"
 author: Javier Garcia
 category: Elixir
 tags: elixir, concurrency
@@ -83,7 +83,7 @@ something with its result.
 If the problem we have at hand is one which consists of multiple operations
 which you can run asynchronously because they don't depend on each other, like
 for example uploading a bunch of documents to S3, or sending a batch of emails
-to different people, the easiest solution is to implement a *fan-in/fan-out*
+to different people, the easiest solution is to implement a _fan-in/fan-out_
 strategy.
 
 This can be done by using tasks too. We can do it naively without using a
@@ -116,7 +116,7 @@ but in the end does get us to the same place.
 
 ## Scheduling work
 
-A different kind of problem we might come across is "_How can we run some work
+A different kind of problem we might come across is "\_How can we run some work
 periodically every N minutes/seconds/etc.". This is fairly simple leveraging a
 different abstraction available in Elixir but ultimately in OTP: the
 [GenServer](https://hexdocs.pm/elixir/GenServer.html).
@@ -219,7 +219,7 @@ The most simple solution for holding some state is creating an
 [Agent](https://hexdocs.pm/elixir/Agent.html). Agents are the simplest possible
 abstraction around state, and sometimes, if what we need is precisely a simple
 solution without too many batteries, it might actually be the best option. One
-of the good things about Agents is that it is a *single* process, which means
+of the good things about Agents is that it is a _single_ process, which means
 that many concurrent clients will get their share of the Agent sequentially,
 which means you don't have to worry about race conditions. On the other hand,
 that can also be a bad thing if it starts becoming a bottleneck.
@@ -233,7 +233,7 @@ faster because it doesn't go through the Erlang Scheduler, furthermore it also
 supports concurrent reads and writes, which the Agent does not. However, it's a
 bit more limited when you want to do atomic operations. Overall it's very well
 suited for a simple shared key/value store, but if it's better suited or not
-for your specific problem, that's up to you.  An naive approach could look
+for your specific problem, that's up to you. An naive approach could look
 something like the below:
 
 ```elixir
@@ -309,8 +309,8 @@ or worker pools for throttling work, but I'll leave those for another day.
 Oh, and one last thing, don't forget to supervise your processes... It's
 fault-tolerance for free :)
 
-*Originally posted at
-[Functional Works' blog](https://functional.works-hub.com/learn/elixir-practical-concurrency-3794f)*
+_Originally posted at
+[Functional Works' blog](https://functional.works-hub.com/learn/elixir-practical-concurrency-3794f)_
 
 ## Further reading
 
