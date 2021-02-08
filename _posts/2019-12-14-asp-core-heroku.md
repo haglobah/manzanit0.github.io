@@ -2,8 +2,8 @@
 layout: post
 title: ".NET Core: Bootstraping an application in Heroku"
 author: Javier García
-category: .NET
-tags: dotnet, asp, docker, heroku, devops
+category: .net
+tags: .net, asp, docker, heroku, devops
 ---
 
 Recently I had a client which requested the development of an MVP for his personal business. Since
@@ -130,15 +130,15 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.0.100
-    - name: Build with dotnet
-      run: dotnet build ./lazarus/lazarus.csproj --configuration Release
-    - name: Test with dotnet
-      run: dotnet test ./lazarusTest/lazarusTest.csproj --configuration Release
+      - uses: actions/checkout@v1
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.0.100
+      - name: Build with dotnet
+        run: dotnet build ./lazarus/lazarus.csproj --configuration Release
+      - name: Test with dotnet
+        run: dotnet test ./lazarusTest/lazarusTest.csproj --configuration Release
 ```
 
 I found it to be fairly straightforward, so I created another Action for deployment everytime I merged
@@ -184,9 +184,9 @@ but I had a little trouble figuring out where it was. It's the repository's sett
 Lastly, to generate the API key, check [here][6].
 
 With this, we now have two actions configured which
-  1. Build and test every commit we push
-  2. Deploy to Heroku every new version we merge to `master`
 
+1. Build and test every commit we push
+2. Deploy to Heroku every new version we merge to `master`
 
 ## Easter Egg: Running migrations
 
@@ -269,7 +269,6 @@ _"Simple things should be simple, complex things should be possible."_
 
 Happy coding,
 Javier
-
 
 [0]: https://docs.microsoft.com/en-us/aspnet/core/razor-pages
 [1]: https://docs.microsoft.com/en-gb/aspnet/core/getting-started

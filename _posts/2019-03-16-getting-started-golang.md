@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Getting started with Golang"
+title: "Getting started with Go"
 author: Javier García
 description: "My personal journey with Go"
-category: golang
-tags: golang, vim
+category: go
+tags: go, vim
 ---
 
 # Getting started with Golang
@@ -25,7 +25,7 @@ repository in case you're interested in my setup. Nonetheless, feel free to use 
 of your choice. Once you have your editor up and running, we can install the Go
 compiler and create a project.
 
-To install the Go compiler, I think the most accurate information is in the 
+To install the Go compiler, I think the most accurate information is in the
 [Getting Started](https://golang.org/doc/install) page, under the golang website.
 In case you're running OSX like me, you can simply run `brew install go` and it will
 install the latest version, as of this writing, v1.12.
@@ -33,7 +33,7 @@ install the latest version, as of this writing, v1.12.
 ## To GOPATH or not to GOPATH
 
 Once we have an editor installed and the compiler in place, the first question that arises
-is *how do I set up an initial project?*
+is _how do I set up an initial project?_
 
 Prior to Go 1.11, the recommended way to develop in Go was through a unique
 workspace located at what they call the `GOPATH`, which usually was `$HOME/go`. The problem
@@ -134,17 +134,17 @@ func TestCreateContact(t *testing.T) {
 Before executing our test, let's highlight a couple of things:
 
 1. In order for Go to understand a test it must be a function named as `func TestCreateContact(t *testing.T)`.
-As long as it's camel-cased and accepts `t *testing.T` as a parameter, we're good to go.
+   As long as it's camel-cased and accepts `t *testing.T` as a parameter, we're good to go.
 
 2. By placing our tests in a separate file ending in `_test.go` we're telling the Golang compiler to
-build those files into a separate package, excluded from the production build. We don't have to actually worry
-about our tests being in the same directory as the actual code.
+   build those files into a separate package, excluded from the production build. We don't have to actually worry
+   about our tests being in the same directory as the actual code.
 
 3. As you might have noticed, we haven't used any assertion-type checks in the test. This is because the Go designers
-thought that it would be best to leave the checking of errors and values up to the developers, *less is more*, they say.
-In order to achieve this, `t` gives us a couple of methods to throw errors upon an unexpected result, like `Errorf`.
+   thought that it would be best to leave the checking of errors and values up to the developers, _less is more_, they say.
+   In order to achieve this, `t` gives us a couple of methods to throw errors upon an unexpected result, like `Errorf`.
 
-Now, if we execute the above code it will give is an error along the lines of  `undefined: New`. Let's try to fix it.
+Now, if we execute the above code it will give is an error along the lines of `undefined: New`. Let's try to fix it.
 For it, let's create another file called `addressbook.go` with the following content:
 
 ```go
@@ -203,7 +203,7 @@ func TestAddContact(t *testing.T) {
 	if name := addressbook.Contacts[0].Name; name != "Javier" {
 		t.Errorf("Expecting name to be Javier, but is %s", name)
 	}
-	
+
 	if email := addressbook.Contacts[0].Email; email != "jgarcia@8thlight.com" {
 		t.Errorf("Expecting email to be jgarcia@8thlight.com, but is %s", email)
 	}
@@ -212,18 +212,19 @@ func TestAddContact(t *testing.T) {
 
 Again, two things to highlight:
 
-1. In the first line the test uses the function `new`. It's basically a shorthand for allocating memory.
-Do take into account that it *allocates* but does not *initialize*. This means it fills up the allocated
-memory with zeros.
+1.  In the first line the test uses the function `new`. It's basically a shorthand for allocating memory.
+    Do take into account that it _allocates_ but does not _initialize_. This means it fills up the allocated
+    memory with zeros.
 
-2. Even though we said above that structures are primitive types not at all like classes, we've used some
-kind of syntax which makes the addressbook seem like it has some behaviour to it: `addressbook.Add(...)`.
-That's called a *method*. As I said, Go structures are primitive types and they only hold data,
-Nonetheless Go does have a syntax which allows us to use functions in a way which makes it look like that.
+2.  Even though we said above that structures are primitive types not at all like classes, we've used some
+    kind of syntax which makes the addressbook seem like it has some behaviour to it: `addressbook.Add(...)`.
+    That's called a _method_. As I said, Go structures are primitive types and they only hold data,
+    Nonetheless Go does have a syntax which allows us to use functions in a way which makes it look like that.
 
-	If we declare a function like `func (a *Addressbook) Add(c *Contact) {...}` it's basically the same as passing
-the Addressbook as a parameter, just that we can invoke it like above. Alas, syntactic sugar. In this case,
-the addressbook variable is called the *receiver type*.
+        If we declare a function like `func (a *Addressbook) Add(c *Contact) {...}` it's basically the same as passing
+
+    the Addressbook as a parameter, just that we can invoke it like above. Alas, syntactic sugar. In this case,
+    the addressbook variable is called the _receiver type_.
 
 From our test we now know that we want a new structure, an `Addresbook`, and a method attached to it. The
 structure will have a property `.Contacts` which will be an array which will allow us to add contacts to it.
@@ -239,9 +240,9 @@ func (addressBook *Addressbook) Add(contact Contact) {
 }
 ```
 
-Aaaaaand, if we execute again `go test`, it should pass. As you can see, we've used the *method* syntax
+Aaaaaand, if we execute again `go test`, it should pass. As you can see, we've used the _method_ syntax
 so the function is attached to the Addressbook and the function simply uses the standard `append` function
-to add an element to a *slice*.
+to add an element to a _slice_.
 
 ## Wrapping up
 
@@ -257,7 +258,7 @@ mv addressbook.go addressbook/addressbook.go
 mv addressbook_test.go addressbook/addressbook_test.go
 ```
 
-Now, let's change `package main` to `package addressbook` in both files. Once we've done that, let's fill our 
+Now, let's change `package main` to `package addressbook` in both files. Once we've done that, let's fill our
 `main.go` file with the following code:
 
 ```go
@@ -289,7 +290,7 @@ If we now run `go run main.go`...
 [{Luke S. luke@skywalker.com} {Finn, The Human finn@treehouse.ooo}]
 ```
 
-A list with both our contacts displays on the console, proving how our application can add contacts and 
+A list with both our contacts displays on the console, proving how our application can add contacts and
 display the list. At the end of the day, this is but a little taste of Go. There is much more to explore, discover
 and learn. If you're interested, I have further enhanced the Contact Manager application by adding a few more functions
 as well as a web API set up with the `gin` framework ([Repository](https://github.com/Manzanit0/gontact-manager)).
@@ -309,15 +310,18 @@ Further more, in the end are some resources I found helpful. Happy coding!
 - [Who needs generics? Use... instead!](https://appliedgo.net/generics/)
 
 ### On slices
+
 - [Go slices, usage and internals](https://blog.golang.org/go-slices-usage-and-internals)
 - [Arrays, slices (and strings): The mechanics of 'append'](https://blog.golang.org/slices)
 - [Slices - tricks](https://github.com/golang/go/wiki/SliceTricks)
 
 ### Vim & vim-go
+
 - [vim-go tutorial](https://github.com/fatih/vim-go-tutorial)
 - [A neovim setup for go](https://hackernoon.com/my-neovim-setup-for-go-7f7b6e805876)
 
 ### Free Books
+
 - [The Little Go book](https://www.openmymind.net/The-Little-Go-Book/)
 - [Go Bootcamp](http://www.golangbootcamp.com)
 - [An introduction to programming in Go](http://www.golang-book.com/)

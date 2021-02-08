@@ -2,7 +2,7 @@
 layout: post
 title: Notes on designing with tests
 author: Javier García
-category: Software Design
+category: software design
 tags: testing, design, software
 ---
 
@@ -46,7 +46,7 @@ Could be changed to greatly simplify the cognitive load and the testability to:
 
 ```elixir
 def do_something_important(property) do
-  # ... 
+  # ...
 end
 ```
 

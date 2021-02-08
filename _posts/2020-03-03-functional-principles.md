@@ -2,7 +2,7 @@
 layout: post
 title: SOLID isn't just for object-oriented programming
 author: Javier García
-category: Software Design
+category: software design
 tags: design, software, solid, functional
 ---
 
@@ -26,7 +26,7 @@ identical. In other words, no side-effects take place, the function is pure.
 While it might seem like a long shot to associate single responsability with
 function purity, it actually has everything to do with it. Pure functions can
 be seen as a simple calculation, or a set of operations applied to a piece of
-data.  As long as functions have one, and only one, responsability that
+data. As long as functions have one, and only one, responsability that
 responsability maps to the calculation. The moment you start triggering
 side-effects, those are _other operations_ happening within the same function.
 
@@ -49,7 +49,7 @@ One of the most used mechanics in functional languages are the use of
 higher-order functions. A HOF is simply a function that either takes a function
 as an argument or returns a function as its result. This is possibly the second
 most simple way of composing behaviour, of course after simply invoking the
-function directly by it's reference.  It enables us to dinamically inject
+function directly by it's reference. It enables us to dinamically inject
 functions into other functions and modify the behaviour in runtime. In some
 way, it's composition the functional way. Now, if we've already designed our
 functions with the first principle in mind, **we can create new functions
@@ -61,7 +61,7 @@ The second topic that I find relevant is that of algebraic data types. At the
 end of the day, an algebraic data type is a kind type made from combining
 multiple types. A simple example is a tuple, since it can contain different
 sets of types within. Another one are union types, like you can find in
-Haskell, F# or Elm.  If we start thinking of types in this way, we can then
+Haskell, F# or Elm. If we start thinking of types in this way, we can then
 start combining the existing types to obtain composites, hence obtaining this
 kind of behaviour.
 
@@ -131,7 +131,6 @@ my previous experience in functional programming. As time progresses I cannot
 but see how the line between functional and object oriented paradigms just
 isn't that deep. It just requires that we open our eyes a little, and that we
 go to the true core of the ideas underneath the words.
-
 
 [0]: https://en.wikipedia.org/wiki/Referential_transparency
 [1]: https://dddcommunity.org/learning-ddd/what_is_ddd/

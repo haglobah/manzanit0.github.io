@@ -2,7 +2,7 @@
 layout: post
 title: "The Testing ROI"
 author: Javier García
-category: Testing
+category: testing
 tags: testing, design, roi
 ---
 

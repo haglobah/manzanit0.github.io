@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Optimising a web crawler in Elixir
+title: "Elixir: Optimising a web crawler"
 author: Javier Garcia
-category: Elixir
-tags: Elixir, concurrency
+category: elixir
+tags: elixir, concurrency
 ---
 
 This is a really quick summary of how I optimised my personal web crawler. You
@@ -71,11 +71,9 @@ Pros:
 
 - Dead simple
 
-
 Cons:
 
 - shortest request will have to wait for the longest one
-
 
 ## Using pooled workers with Genservers
 
@@ -89,12 +87,10 @@ Pros:
 - More efficient: one worker doesn't have to wait for all the other workers if
   a request takes too long.
 
-
 Cons:
 
 - Much more complex, compared to the three-liner using tasks.
 - Requires either implementing a worker pool or using a 3rd party lib like `poolboy`.
-
 
 ## Using lazy collections
 

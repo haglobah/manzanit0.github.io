@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Elixir: Practical Concurrency"
+title: "Elixir: Practical Concurrency Cookbook"
 author: Javier Garcia
-category: Elixir
-tags: elixir, concurrency
+category: elixir
+tags: elixir, concurrency, otp
 ---
 
 While the Erlang runtime is known for being a highly concurrent platform to

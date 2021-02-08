@@ -6,12 +6,12 @@ category: elixir
 tags: functional, elixir, concurrency
 ---
 
-The first question that arises when we talk about concurrency is *what is concurrency?*
+The first question that arises when we talk about concurrency is _what is concurrency?_
 
 > Concurrency is the ability of different parts or units of a program, algorithm, or problem to be executed
 > out-of-order or in partial order, without affecting the final outcome.
 >
-> ~ [*Wikipedia*](https://en.wikipedia.org/wiki/Concurrency_(computer_science))
+> ~ [_Wikipedia_](<https://en.wikipedia.org/wiki/Concurrency_(computer_science)>)
 
 When talking about concurrency, it's important not to confuse **concurrency** with **parallelism**. While concurrency
 implies that two pieces of code are executed in different contexts, it doesn't necessarily imply that they are executed
@@ -46,7 +46,7 @@ scheduler will also yield.
 
 Since Erlang can have multiple schedulers, based on how many cores our processor has, to decrease the number of lock
 conflicts in the system, it creates a run queue for each scheduler. Furthermore, To make sure that scheduling is fair
-and efficient and no scheduler gets overloaded, the Ericsson team introduced the *Migration Logic* which controls and
+and efficient and no scheduler gets overloaded, the Ericsson team introduced the _Migration Logic_ which controls and
 balances queues based on statistics it collects from the system.
 
 ## Lightweight processes
@@ -77,7 +77,7 @@ whose purpouse is to run simple tasks, most systems are designed with many proce
 
 In order for processes to be able to send and receive messages, they have mailboxes. Every time a process is sent a
 message, the message is queued up in its mailbox and isn't picked up until the process invokes `receive`. As you can
-imagine, if a process doesn't *pick up its mail* regularly, it's mailbox will keep growing and potentially make the
+imagine, if a process doesn't _pick up its mail_ regularly, it's mailbox will keep growing and potentially make the
 system run out of memory. Due to this, it's important to design the behaviour of the processes taking it into account.
 
 Like we mentioned, actors are completely isolated and never share memory, but they may have memory themselves privately.

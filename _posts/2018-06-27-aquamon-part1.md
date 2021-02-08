@@ -4,12 +4,12 @@ title: "Interacting with Salesforce's Tooling API"
 author: Javier Garcia
 description: "An application to refresh Salesforce sandboxes."
 category: salesforce
-tags: salesforce, .NET, automation
+tags: salesforce, .net, automation
 ---
 
 Since I started working at Frontiers, we've had many technical tasks that were monotonous and repetitive, typical in most technical jobs. One of them was refreshing our Salesforce Sandboxes every time we wanted to start working on a new feature.
 
-Our *modus operandi* usually is to first refresh a sandbox, copy from Production, then branch our repository's Test branch, push all the metadata to the sandbox, and the finally start working on it until it's finished and a pull request is made.
+Our _modus operandi_ usually is to first refresh a sandbox, copy from Production, then branch our repository's Test branch, push all the metadata to the sandbox, and the finally start working on it until it's finished and a pull request is made.
 
 If you've worked for some time with Salesforce, you are probably aware of how tedious it is to refresh a sandbox from Production and, once it is finished, set all the environment variables in Custom Settings or Custom Metadata. Here is where **Aquamon** comes into play.
 
@@ -83,7 +83,7 @@ public class ForceClient
 
 ## Connecting to the Tooling API
 
-Once we're authenticated, in order to create, refresh and poll sandboxes, Salesforce exposes two different entities: the [SandboxInfo](https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/tooling_api_objects_sandboxinfo.htm) and the [SandboxProcess](https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/tooling_api_objects_sandboxprocess.htm). To create or refresh sandboxes we would have to create a SandboxInfo record, to check the status, we would poll the SandboxProcess. 
+Once we're authenticated, in order to create, refresh and poll sandboxes, Salesforce exposes two different entities: the [SandboxInfo](https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/tooling_api_objects_sandboxinfo.htm) and the [SandboxProcess](https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/tooling_api_objects_sandboxprocess.htm). To create or refresh sandboxes we would have to create a SandboxInfo record, to check the status, we would poll the SandboxProcess.
 
 All our development is going to oscillate between these two entities: do we want a new sandbox? Post a SandboxInfo. Do we want to refresh it? Patch it. Do we want to get the status? Then Get it.
 
@@ -123,10 +123,10 @@ public class SandboxInfo
 ```csharp
 public class SandboxManager
 {
-    private const string SANDBOX_INFO_ENDPOINT = 
+    private const string SANDBOX_INFO_ENDPOINT =
         "/services/data/v42.0/tooling/sobjects/SandboxInfo/";
 
-    private const string SANDBOX_PROCESS_ENDPOINT = 
+    private const string SANDBOX_PROCESS_ENDPOINT =
         "/services/data/v42.0/tooling/sobjects/SandboxProcess/";
 
     private const string QUERY_SANDBOX_INFO =
@@ -185,11 +185,11 @@ public class SandboxManager
 
 Just as a heads up, I added a couple of extra methods to `ForceClient.cs` in order to encapsulate all the `HttpClient` instances.
 
-``` csharp
+```csharp
 public class ForceClient
 {
     // ... Further methods in the Force client.
-    
+
     public HttpResponseMessage Get(string endpoint)
     {
         return Callout(HttpMethod.Get, endpoint, "{}");
@@ -222,7 +222,7 @@ public class ForceClient
     }
 }
 ```
-    
+
 ## What about the rest of the application?
 
 Now, all the latter summarizes the interaction with Salesforce. To wire that up in a CLI application, I used the out-of-the-box `Microsoft.Extensions.Configuration` to read the configuration and bind it to different POCOs and `Microsoft.Extensions.CommandLineUtils` to set up the commands and argument parsing.

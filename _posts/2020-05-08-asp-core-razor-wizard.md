@@ -2,12 +2,12 @@
 layout: post
 title: ".NET Core: Building a server-rendered wizard"
 author: Javier García
-category: .NET
-tags: dotnet, asp, server-rendering, forms
+category: .net
+tags: .net, asp, server-rendering, forms
 ---
 
 As you can see based on my most recent posts, I've been focusing on some
-ASP.NET Core development.  Recently, one of the things I've been working on is
+ASP.NET Core development. Recently, one of the things I've been working on is
 a snappy form with a wizard-like interface which would allow the users of an
 application to input the information without being overwhelmed with the amount
 data required.
@@ -35,7 +35,7 @@ productivity that otherwise I would not have.
 
 Another of the main benefits I have found when going with a server-rendered
 approach is that I don't necessarily have to go with creating a backend API and
-a frontend interface which consumes the API.  Sometimes, you just don't need
+a frontend interface which consumes the API. Sometimes, you just don't need
 all the RESTful endpoints, nor the JSON serialising and de-serialising, dealing
 with CORS, or many of the other inconvenients of the architecture. You just
 need something SIMPLE.
@@ -55,7 +55,7 @@ a simple page and some event handlers for it.
 
 As an extra bonus, while playing around with Razor Pages, I discovered them to
 be not just incredibly simple and easy to use but also extremely fast (although
-it does make sense... simple is usually fast!).  This is a quick snapshot of
+it does make sense... simple is usually fast!). This is a quick snapshot of
 how fast going back and forward through the original wizard was: ~120ms in
 average, with form steps of over 10 fields and the full wizard being 6 steps.
 
@@ -358,7 +358,7 @@ public class Index : PageModel
 ```
 
 If you've tried to copy paste the above, you will notice that some things don't
-seem to exist.  The first one is `TempData::Set` and the second one the Mapper.
+seem to exist. The first one is `TempData::Set` and the second one the Mapper.
 Regarding TempData, I created a little extension for convenience. I figured
 that serialising the data into JSON and saving it as a cookie could be the
 simplest possible thing, so that's what I went with:
@@ -454,7 +454,7 @@ I mean. I couldn't come up with any bad reason not to do it :-)
 ## Model binding
 
 If you've gotten to this section, it's probably because you're interested in
-how it wraps up.  So far, we've built all the little blocks that put together a
+how it wraps up. So far, we've built all the little blocks that put together a
 server rendered wizard except one, one of the most crucial, actually. Without
 it it won't work. It's the model binder.
 
@@ -626,7 +626,6 @@ it makes sense to try the newest and shiniest framework that has come out, but
 other times some plain old server html is more than enough, actually even
 better than enough, because it allows us to keep the application simpler, the
 development workflow faster and the headspace smaller.
-
 
 [1]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
 [2]: https://www.learnrazorpages.com/razor-pages/tempdata
