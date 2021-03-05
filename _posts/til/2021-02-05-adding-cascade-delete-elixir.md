@@ -2,7 +2,7 @@
 layout: post
 title: Adding DELETE CASCADE via Ecto Migrations
 author: Javier Garcia
-category: Go
+category: elixir
 tags: elixir, ecto
 ---
 
@@ -16,7 +16,7 @@ defmodule MyApp.Repo.Migrations.CascadeDelete do
   def change do
     drop constraint(:emails, :emails_timeline_event_id_fkey)
 
-    alter table(:case_emails) do
+    alter table(:emails) do
       modify :timeline_event_id, references(:timeline_events, type: :uuid, on_delete: :delete_all)
     end
   end
