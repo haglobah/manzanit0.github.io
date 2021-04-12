@@ -1,21 +1,37 @@
 ---
 layout: post
-title: Deciding between LEFT JOINs and separate single queries
+title: LEFT JOINs VS separate single queries
 author: Javier Garcia
 category: postgres
 tags: sql, postgres
 ---
 
-I've always believed that whenever you managed to retrieve the data in a single
-query, that would always be more optimal than doing multiple queries, just
-because there would be less round-trips, because Postgres wouldn't overfetch...
-whatever. Well, I was wrong.
+I've always believed that whenever you managed to retrieve data from a database
+in a single query, it would always be much better than doing multiple queries,
+just because there would be less round-trips between the server and the
+database, because "things" are optimised at the database level, etc.. Well, I
+was wrong. At least on some level.
 
-Today I learnt that in the case of LEFT JOINs, sometimes it's much more
-expensive to join than to do separate queries. Why? The reason is that when you
-do a left join between table A and table B you get all the records of table A
-repeated as many times as children it has in table B. This means that **a LEFT
-JOIN will use exponentially more data since the result will be a cartesian
+While it is true that most database engines nowadays will optimise queries so
+that they'll perform better to a single query than to many, today I learnt that
+when doing multiple LEFT JOINs, sometimes it's much more expensive in terms of
+the data transferred to join than to do separate queries. This means that a
+query with multiple left joins will end up returning much more data than
+performing separate queries.
+
+I actually learnt this when I saw a piece of code that was doing 6 separate
+queries and decided to blindly refactor it into 5 LEFT JOINs. After the
+refactor I went ahead and benchmarked the refactored approach with the old
+one... only to find out that by doing a single query I actually hindered the
+performance from 30ms to 80ms! I didn't understand, so I started digging, and
+that's when I realised that the fact that the database was sending three times
+as much data over the wire was actually what slowed down my code.
+
+So, Why does this happen? It's simply a characteristic of the relational
+model.The reason is that when you do a left join between table A and table B
+you get all the records of table A repeated as many times as children it has in
+table B. This means that a query using multiple, depending on the model, **LEFT
+JOINs will use exponentially more data since the result will be a cartesian
 product**.
 
 This sounds terribly mathematic and cryptic, and could probably be summarised
@@ -162,6 +178,10 @@ have gotten 3 posts, 9 comments and 9 tags making it a total of 21 rows too. We
 can start to see the difference, even if it's very subtle in this particular
 case.
 
+At this stage, if we expect our query to be returning this order of magnitude
+of data it will probably be much better to fetch it in a single query, however,
+what if we need to fetch much more data?
+
 
 ## Taking it to the next level: Increasing volume
 
@@ -232,12 +252,14 @@ posts and 300.000 comments, so again, a LEFT JOIN is a good option. However, in
 the second scenario, we've retrieved 900.000 rows. With separate queries we
 would have retrieved 300.000 comments, 300.000 tags and 100.000 posts. This
 means that by left joining both tables we're retreiving 200k records which
-othrwise we would not need! Think of this in terms of the work we're loading
-into thed database and, in case you're not streaming the data, the amount of
-memory you'll load the server with.
+othrwise we would not need! Think of this in terms of the the amount of memory
+you'll load the server with as well as all the data that has to go over the
+wire. Of course, the database itself will prefer that you fetch the records in
+a single query, because they're optimised for that, but when you step back and
+think about the global picture: server, network, etc., it's different.
 
 ## Final thoughts
 
 As we've seen, not thinking through usage of a LEFT JOIN can end up being way
-less performant than shooting separate queries. At the end of the day, it all
+less efficient than shooting separate queries. At the end of the day, it all
 comes back to the mantra any developer should have: _always measure_.
