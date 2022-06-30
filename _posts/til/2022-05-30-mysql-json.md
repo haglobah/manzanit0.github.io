@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Working with JSON in MySQL
+title: "Working with JSON in MySQL"
 author: Javier Garcia
 category: mysql
 tags: sql, mysql, json

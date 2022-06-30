@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Elixir: Monorepos
+title: "Elixir: Monorepos"
 author: Javier Garcia
 category: elixir
 tags: elixir, monorepos
@@ -553,15 +553,15 @@ jobs:
       - name: Setup Elixir
         uses: erlef/setup-beam@v1
         with:
-          elixir-version: ${{ matrix.elixir }}
-          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ '{{' }} matrix.elixir }}
+          otp-version: ${{ '{{' }} matrix.otp }}
 
       - name: Retrieve Mix Dependencies Cache
         uses: actions/cache@v1
         id: mix-cache
         with:
           path: apps/auth_service/deps
-          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/apps/auth_service/mix.lock')) }}
+          key: ${{ '{{'}} runner.os }}-${{ '{{' }} matrix.otp }}-${{ '{{' }} matrix.elixir }}-mix-${{ '{{ '}} hashFiles(format('{0}{1}', github.workspace, '/apps/auth_service/mix.lock')) }}
 
       - name: Install Mix Dependencies
         if: steps.mix-cache.outputs.cache-hit != 'true'
