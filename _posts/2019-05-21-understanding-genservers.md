@@ -1,21 +1,21 @@
 ---
 layout: post
-title: "Elixir: Understanding Genservers"
+title: "Elixir: Understanding GenServers"
 author: Javier García
-description: "Genservers under the hood"
+description: "GenServers under the hood"
 category: elixir
 tags: elixir, otp, genserver, in-depth
 ---
 
-If you're reading this, it probably is that you've had to use Elixir's `Genserver` behaviour already
+If you're reading this, it probably is that you've had to use Elixir's `GenServer` behaviour already
 but you're wondering how it works. For me, the first time I tried using it I got it completely wrong –
 Instead of using it as a store of data I ended up spawning up a brand new genserver for each new
 record I wanted to save. When I found out, I realised it was simply because I wasn't really
 understanding what was going on under the hood.
 
-## What is a Genserver?
+## What is a GenServer?
 
-A Genserver, according to the [hexdocs](https://hexdocs.pm/elixir/GenServer.html) is:
+A GenServer, according to the [hexdocs](https://hexdocs.pm/elixir/GenServer.html) is:
 
 > A behaviour module for implementing the server of a client-server relation.
 >
@@ -30,12 +30,12 @@ serves two different purposes: first it allows us to execute pieces of code asyn
 necessarily block our main thread, and secondly it helps us save state.
 
 In order to help us wrap our heads around this concept, we're going to build our own implementation of
-a Genserver in Elixir. A really simple one!
+a GenServer in Elixir. A really simple one!
 
 ## Processes 101
 
 Before getting started, it's important to review how processes work and communicate in Elixir. In Elixir,
-all code runs inside isolated processes. The basic mechanism for spawning those process is the `spawn/1`
+all code runs inside isolated processes. The basic mechanism for spawning those processes is the `spawn/1`
 function.
 
 ```Elixir
@@ -44,12 +44,12 @@ iex> spawn fn -> "Hello world!" end
 ```
 
 As you can see, `spawn/1` returns a process identifier (PID). Spawned processes usually execute the function
-we have provided them with and then exit, so it's most likely dead. Take into account that wee can also spawn
+we have provided them with and then exit, so it's most likely dead. Take into account that we can also spawn
 processes with functions from already existing modules with `spawn/4`, but we'll check it out later in the examples.
 
-Furthermore, in order for processes to comunicate Elixir provides us with the [`send/3`](https://hexdocs.pm/elixir/Process.html#send/3)
+Furthermore, in order for processes to communicate Elixir provides us with the [`send/3`](https://hexdocs.pm/elixir/Process.html#send/3)
 and [`receive/1`](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#receive/1). `send/3` allows us to send a
-message to any process, given that we know it's PID, and receive intercepts all the messages in the current process.
+message to any process, given that we know its PID, and receive intercepts of all the messages in the current process.
 Check out this example:
 
 ```Elixir
@@ -94,13 +94,12 @@ Said 'Hey peep!' to #PID<0.134.0>
 
 ## Storing state in a stateless world
 
-So far, in our journey to understand Genservers, we have learned about `spawn/1`, `send/3` and `receive/1`,
-but, how does that take us any closer to understanding how genservers work?. Before jumping to the Genserver
+So far, in our journey to understand GenServers, we have learned about `spawn/1`, `send/3` and `receive/1`,
+but, how does that take us any closer to understanding how genservers work?. Before jumping to the GenServer
 behaviour we have still one more piece of the puzzle to unveil: **state**.
 
 As you know, Elixir is a functional language which has now knowledge of state as is – we create modules, which
-havew functions, and we give them data, which they spit out processed. But we don't have *instances* as we would
-in C# or Java, instances that store state for us. Furthermore, when studying processes, as we spawn them, they die.
+have functions, and we give them data, which they spit out processed. But we don't have *instances* as we would in C# or Java, instances that store state for us. Furthermore, when studying processes, as we spawn them, they die.
 So how can we store state? The answer is recursion.
 
 In order to be able to maintain some state in Elixir, the common pattern is for a process to recursively call itself
@@ -136,9 +135,9 @@ BREAK: (a)bort (c)ontinue (p)roc info (i)nfo (l)oaded
 
 Yes, it starts printing all the numbers and won't stop until you stop the process, which you can do by pressing twice `Ctrl + C`.
 Anyways, as you've seen, we have been able to store and change state with a recursive loop. That is the key to how
-Genservers will hold state. Now, let us move forward to the real deal!
+GenServers will hold state. Now, let us move forward to the real deal!
 
-## A homemade Genserver
+## A homemade GenServer
 
 With all the tools we have gathered, we can now commence. Since I'm all about TDD, let's start with a test. Sticking to
 the type of APIs Elixir provides us, I will want an `init/0` function which will spawn our server for us, and a `save/2`
@@ -159,7 +158,7 @@ end
 
 In order to make that test pass, we kind of do have to write a little bit of code. First we need the `init/0` function,
 but we also need the loop we talked about which will be storing the state for us and a way to send back the response. If
-you've tinkered around with Genservers a little, you will know that they allow the consumers to send both synchronous and
+you've tinkered around with GenServers a little, you will know that they allow the consumers to send both synchronous and
 asynchronous messages via `call/2` and `cast/2`. In this case, we're trying to develop a function similar to `call/2` –
 a function which waits for the server to create the response and return it.
 
@@ -294,7 +293,7 @@ end
 
 ## What about the async functions?
 
-As I commented before, Genservers also have asynchronous handlers: `cast/2`. The reason why
+As I commented before, GenServers also have asynchronous handlers: `cast/2`. The reason why
 I decided to only implement the synchronous handlers is because the async ones are simpler.
 Our synchronous function looks like this:
 
@@ -318,14 +317,14 @@ end
 
 ## Conclusions
 
-After having read through the whole thing, Genservers don't look so dangerous anymore, do they? At the end
+After having read through the whole thing, GenServers don't look so dangerous anymore, do they? At the end
 of the day they are, like our `Store` module, a simple wrapper around processes which communicate between
 each other and provide us with a client-server architecture. Before finishing though, I will mention Agents.
 
 [Agents](https://hexdocs.pm/elixir/Agent.html) are yet another abstraction provided to us by the Elixir core
 team to make working with state easier. At the end of the day, they are simply a
-[wrapper](https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/agent.ex#L270) around Genservers
+[wrapper](https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/agent.ex#L270) around GenServers
 themselves, but they provide us with a much cleaner and easier API to use – we don't have to worry about
 implementing the cast/call callbacks boilerplate. Next time you need to store state in your application,
-give it a thought – Do you need a Genserver? Can you do it with a Task or an Agent instead? It's always
+give it a thought – Do you need a GenServer? Can you do it with a Task or an Agent instead? It's always
 about simple code!
